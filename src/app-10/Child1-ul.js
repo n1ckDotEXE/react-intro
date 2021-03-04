@@ -10,7 +10,17 @@ export class Child1UL extends Component {
   };
 
   handleToggleOnChange = (event) => {
-    console.log(event.target.name, event.target.value);
+    this.setState({
+      toggleInput: event.target.value,
+    });
+  };
+
+  handleToggleButton = (id, itemTodo) => {
+    this.setState({
+      toggleInput: itemTodo,
+    });
+    this.props.handleEditToggle(id);
+    this.props.handleEditUpdateTodo(id, this.state.toggleInput);
   };
 
   render() {
@@ -40,20 +50,25 @@ export class Child1UL extends Component {
               )}
 
               <Button
+                propsButtonToggle={item.isButtonToggle}
                 propsClassName={"btn btn-success button-style"}
-                propsName={"Edit"}
-                propsOnClick={() => this.props.handleEditToggle(item.id)}
+                propsName={item.isEditToggle ? "Submit" : "Edit"}
+                propsOnClick={() => this.handleToggleButton(item.id, item.todo)}
+                //propsOnClick={() => this.props.handleEditToggle(item.id)}
               />
               <Button
+                propsButtonToggle={item.isButtonToggle}
                 propsClassName={"btn btn-warning button-style"}
                 propsOnClick={() => this.props.handleIsDone(item.id)}
                 propsName={"Done"}
               />
               <Button
+                propsButtonToggle={item.isButtonToggle}
                 propsClassName={"btn btn-danger button-style"}
                 propsOnClick={() => this.props.handleDeleteByID(item.id)}
                 propsName={"Delete"}
               />
+
               {/* <button
               className="btn btn-warning button-style"
               onClick={() => props.handleIsDone(item.id)}

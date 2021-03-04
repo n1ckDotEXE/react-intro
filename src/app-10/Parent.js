@@ -14,18 +14,21 @@ class Parent extends Component {
         todo: "walk the dog",
         isDone: false,
         isEditToggle: false,
+        isButtonToggle: false,
       },
       {
         id: uuidv4(),
         todo: "buy milk",
         isDone: false,
         isEditToggle: false,
+        isButtonToggle: false,
       },
       {
         id: uuidv4(),
         todo: "wash dishes",
         isDone: false,
         isEditToggle: false,
+        isButtonToggle: false,
       },
     ],
     inputTodo: "",
@@ -57,11 +60,16 @@ class Parent extends Component {
   };
 
   handleDeleteByID = (id) => {
-    console.log(id);
+    // let filteredTodoListArray = this.state.todoList.filter(
+    //   (item) => item.id !== id
+    // );
 
-    let filteredTodoListArray = this.state.todoList.filter(
-      (item) => item.id !== id
-    );
+    let filteredTodoListArray = this.state.todoList.filter((item) => {
+      if (item.id !== id) {
+        item.isButtonToggle = false;
+        return item;
+      }
+    });
 
     this.setState({
       todoList: filteredTodoListArray,
@@ -79,7 +87,6 @@ class Parent extends Component {
       }
       return item;
     });
-
     this.setState({
       todoList: updatedTodoListArray,
     });
@@ -90,6 +97,15 @@ class Parent extends Component {
       if (item.id === id) {
         item.isEditToggle = !item.isEditToggle;
       }
+
+      // else {
+      //   item.isButtonToggle = !item.isButtonToggle;
+      // }
+
+      if (item.id !== id) {
+        item.isButtonToggle = !item.isButtonToggle;
+      }
+
       return item;
     });
 
@@ -98,8 +114,17 @@ class Parent extends Component {
     });
   };
 
-  handleToggleOnChange = (event) => {
-    console.log(event.target.name, event.target.value);
+  handleEditUpdateTodo = (id, newTodoItem) => {
+    let updatedTodoItem = this.state.todoList.map((item) => {
+      if (item.id === id) {
+        item.todo = newTodoItem;
+      }
+      return item;
+    });
+
+    this.setState({
+      todoList: updatedTodoItem,
+    });
   };
 
   render() {
@@ -116,6 +141,7 @@ class Parent extends Component {
           handleDeleteByID={this.handleDeleteByID}
           handleIsDone={this.handleIsDone}
           handleEditToggle={this.handleEditToggle}
+          handleEditUpdateTodo={this.handleEditUpdateTodo}
         />
       </div>
     );

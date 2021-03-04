@@ -1,8 +1,13 @@
 import React from "react";
 
 const Button = (props) => {
+  //console.log(props.propsName);
   return (
-    <button onClick={props.propsOnClick} className={props.propsClassName}>
+    <button
+      disabled={props.propsButtonToggle}
+      onClick={props.propsOnClick}
+      className={props.propsClassName}
+    >
       {props.propsName}
     </button>
   );
