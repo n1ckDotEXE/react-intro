@@ -13,16 +13,19 @@ class Parent extends Component {
         id: uuidv4(),
         todo: "walk the dog",
         isDone: false,
+        isEditToggle: false,
       },
       {
         id: uuidv4(),
         todo: "buy milk",
         isDone: false,
+        isEditToggle: false,
       },
       {
         id: uuidv4(),
         todo: "wash dishes",
         isDone: false,
+        isEditToggle: false,
       },
     ],
     inputTodo: "",
@@ -33,7 +36,12 @@ class Parent extends Component {
 
     let newTodoArray = [
       ...this.state.todoList,
-      { id: uuidv4(), todo: this.state.inputTodo, isDone: false },
+      {
+        id: uuidv4(),
+        todo: this.state.inputTodo,
+        isDone: false,
+        isEditToggle: false,
+      },
     ];
 
     this.setState({
@@ -60,8 +68,38 @@ class Parent extends Component {
     });
   };
 
-  handleIsDone = () => {
-    console.log(64);
+  handleIsDone = (id) => {
+    //go through the array and find the ID of the todo
+    //Then flip the todo from false to true or true to false
+    //then set new state
+
+    let updatedTodoListArray = this.state.todoList.map((item) => {
+      if (item.id === id) {
+        item.isDone = !item.isDone;
+      }
+      return item;
+    });
+
+    this.setState({
+      todoList: updatedTodoListArray,
+    });
+  };
+
+  handleEditToggle = (id) => {
+    let toggledTodoList = this.state.todoList.map((item) => {
+      if (item.id === id) {
+        item.isEditToggle = !item.isEditToggle;
+      }
+      return item;
+    });
+
+    this.setState({
+      todoList: toggledTodoList,
+    });
+  };
+
+  handleToggleOnChange = (event) => {
+    console.log(event.target.name, event.target.value);
   };
 
   render() {
@@ -77,6 +115,7 @@ class Parent extends Component {
           todoList={this.state.todoList}
           handleDeleteByID={this.handleDeleteByID}
           handleIsDone={this.handleIsDone}
+          handleEditToggle={this.handleEditToggle}
         />
       </div>
     );
