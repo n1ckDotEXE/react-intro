@@ -7,7 +7,7 @@ export default class Gif extends Component {
   state = {
     isLoading: true,
     giphyArray: [],
-    inputValue: "hamster",
+    inputValue: "",
   };
 
   getGiphyAPIFuncV1 = async (inputValue) => {
